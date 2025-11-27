@@ -1,42 +1,32 @@
-// IMessageRenderer - contrato por convenção
-class IMessageRenderer {
-  render(message) {
-    throw new Error("Método render() não implementado.");
+//Implementando o LSP
+
+
+class Writer {
+  write(message) {
+    throw new Error("Método write() precisa ser implementado.");
   }
 }
 
-// Implementação padrão (Console)
-class ConsoleRenderer extends IMessageRenderer {
-  render(message) {
-    console.log(message);
+class ConsoleWriter extends Writer {
+  write(message) {
+    console.log("ConsoleWriter =>", message);
   }
 }
 
-// Novo comportamento sem alterar nada existente (Arquivo)
-import fs from 'fs';
-class FileRenderer extends IMessageRenderer {
-  render(message) {
-    fs.writeFileSync('log.txt', message + '\n', { flag: 'a' });
+class FileWriter extends Writer {
+  write(message) {
+    console.log("FileWriter (simulado) =>", message);
   }
 }
 
-// Serviço HelloWorld – FECHADO para modificação, ABERTO para extensão
-class HelloWorldService {
-  constructor(renderer) {
-    this.renderer = renderer; 
-  }
-
-  sayHello(id) {
-    const msg = `Hello, World! ${id}`;
-    this.renderer.render(msg);
-  }
+function sendMessage(writer, message) {
+  writer.write(message);
 }
 
-// --- Uso ---
-// modo console
-const serviceConsole = new HelloWorldService(new ConsoleRenderer());
-serviceConsole.sayHello("002");
+// ------ Testando o LSP ------
 
-// modo arquivo (SEM modificar a classe HelloWorldService)
-const serviceFile = new HelloWorldService(new FileRenderer());
-serviceFile.sayHello("002");
+const consoleWriter = new ConsoleWriter();
+const fileWriter = new FileWriter();
+
+sendMessage(consoleWriter, "Hello, World! 002"); 
+sendMessage(fileWriter, "Hello, arquivo! 002"); 

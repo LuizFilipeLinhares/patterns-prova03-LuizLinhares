@@ -1,4 +1,6 @@
-// simpleFormatter.js
+////IMPLEMENTANDO O ISR
+
+
 class SimpleFormatter {
   format(message) {
     const timestamp = new Date().toISOString();
@@ -6,18 +8,18 @@ class SimpleFormatter {
   }
 }
 
-// consoleWriter.js
+
 class ConsoleWriter {
   write(formatted) {
     console.log(formatted);
   }
 }
 
-// helloWorldService.js
+
 class HelloWorldService {
   constructor(formatter, writer) {
-    this.formatter = formatter; // espera algo com .format()
-    this.writer = writer;       // espera algo com .write()
+    this.formatter = formatter;
+    this.writer = writer;       
   }
 
   sayHello(id) {
